@@ -1,9 +1,8 @@
+import java.io.File
 
+const val DIR = "C:\\Users\\Learneo\\IdeaProjects\\Crypto\\resources"
 
-
-const val DIR = "C:\\Users\\Learneo\\IdeaProjects\\Crypto 1\\resources"
-
-const val KEY_AMOUNT = 8
+const val KEY_AMOUNT = 64
 
 fun main() {
     val pubKeys = ArrayList<LPublicKey>(0)

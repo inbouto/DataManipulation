@@ -1,27 +1,12 @@
 import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.log2
+import kotlin.math.pow
 
 
+class MerkleTree{
 
-class MerkleTree : Collection<ByteArray>{
-    override fun contains(element: ByteArray): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun containsAll(elements: Collection<ByteArray>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun isEmpty(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun iterator(): Iterator<ByteArray> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
+    private val size: Int
     private val root: Root
     private val depth: Int
 
@@ -29,14 +14,9 @@ class MerkleTree : Collection<ByteArray>{
         if((log2(pubKeys.size.toFloat()) - log2(pubKeys.size.toFloat()).toInt() >0))  //If the pubKeys array doesnt contain a power of 2 amount of keys...
             throw Exception()
 
-        pubKeys.sortedWith(compareBy {
-            it.toString()
-        })
-        this.size = pubKeys.size
+        size = pubKeys.size
         depth = log2(size.toFloat()).toInt()
         root = Root(pubKeys)
-
-
     }
 
 
@@ -55,9 +35,7 @@ class MerkleTree : Collection<ByteArray>{
 
 
 
-    /*fun getKey(index : Int) : Leaf{
-        if
-    }*/
+
 
 
 
@@ -66,13 +44,12 @@ class MerkleTree : Collection<ByteArray>{
     }
     class Leaf(private val content: ByteArray, override val parent: Parent) : Child {
         override val hash: ByteArray = content.sha()
-        override fun print(): ArrayList<String> = arrayListOf(hash.toHexFormat())
+        override fun print(): ArrayList<String> = arrayListOf("HASH :\t${hash.toHexFormat()}")
     }
 
     class Root(contents : List<ByteArray>) : Parent(contents){
         override fun recursivePrint() : ArrayList<String> {
             val res = super.recursivePrint()
-            res.add(0, "root hash :")
             return res
         }
     }
@@ -100,8 +77,8 @@ class MerkleTree : Collection<ByteArray>{
 
         open fun recursivePrint() : ArrayList<String>{
             val res : ArrayList<String> = ArrayList<String>(0)
-            res.add(this.hash.toHexFormat())
-            res.add("child 0 >")
+            res.add("HASH :\t${this.hash.toHexFormat()}")
+            res.add("CHILD 0 >")
             res.addAll({            //takes the print of the son and prepends a tab to it
                 val res = ArrayList<String>(0)
                     child0.print().forEach {
@@ -109,7 +86,7 @@ class MerkleTree : Collection<ByteArray>{
                     }
                 res
             }())
-            res.add("child 1 >")
+            res.add("CHILD 1 >")
             res.addAll({            //takes the print of the son and prepends a tab to it
                 val res = ArrayList<String>(0)
                 child1.print().forEach {
