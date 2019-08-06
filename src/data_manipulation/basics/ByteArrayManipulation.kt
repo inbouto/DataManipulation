@@ -17,7 +17,7 @@ import kotlin.math.pow
 
 /**
  * Generates a sha-256 hash of a [ByteArray]
- * Uses [MessageDigest]
+ * @see [MessageDigest]
  * @return the sha-256 hash of the [ByteArray]
  */
 fun ByteArray.sha() : ByteArray{
@@ -41,7 +41,7 @@ fun Byte.BinaryCheck(checkValue : Int) : Boolean{
 /**
  * Checks whether a certain bit at a given position in the byte is a 1 or a 0
  * Useful for sequential checks of bits in a byte
- * Uses [Byte.BinaryCheck]
+ * @see [Byte.BinaryCheck]
  * @param position the position of the bit to check between 1 and 8 (heaviest bit is bit 1, lightest bit is bit 8)
  * @return true if bit is a 1, false if bit is a 0
  * @throws [InvalidBitPositionException] when [position] is lesser than 1 or greater than 8
@@ -55,7 +55,7 @@ fun Byte.checkBit(position : Int) : Boolean{
 /**
  * Does a bitwise XOR (exclusive OR) comparison between two [ByteArray]s
  * Both [ByteArray]s have to be the same size
- * Uses [Byte.xor]
+ * @see [Byte.xor]
  * @param comp [ByteArray] to compare with [this]
  * @return the result of the bitwise XOR operation between [this] and [comp]
  * @throws DifferentArraySizesException
@@ -73,7 +73,7 @@ fun ByteArray.xor(comp : ByteArray) : ByteArray {
 /**
  * Does a bitwise AND comparison between two [ByteArray]s.
  * Both [ByteArray]s have to be the same size
- * Uses [Byte.and]
+ * @see [Byte.and]
  * @param comp [ByteArray] to compare with [this]
  * @return the result of the bitwise AND operation between [this] and [comp]
  * @throws DifferentArraySizesException
@@ -90,9 +90,9 @@ fun ByteArray.and(comp : ByteArray) : ByteArray {
 
 
 /**
- * Does a bitwise OR comparison between two [ByteArray]s.
+ * Does a bitwise OR comparison between two [ByteArrays][ByteArray]
  * Both [ByteArray]s have to be the same size
- * Uses [Byte.or]
+ * @see [Byte.or]
  * @param comp [ByteArray] to compare with [this]
  * @return the result of the bitwise OR operation between [this] and [comp]
  * @throws DifferentArraySizesException
@@ -108,7 +108,7 @@ fun ByteArray.or(comp : ByteArray) : ByteArray {
 
 /**
  * Does a bitwise inversion (NOT operation) of [this]
- * Uses [Byte.inv]
+ * @see [Byte.inv]
  * @return inverted bit values for [this]
  */
 fun ByteArray.inv() : ByteArray {
@@ -121,7 +121,7 @@ fun ByteArray.inv() : ByteArray {
 
 /**
  * Checks whether a given bit of a [ByteArray] is a 1 or a 0
- * Uses [Byte.checkBit]
+ * @see [Byte.checkBit]
  * @param index the position of the bit to check (max value is 8 times [this.size])
  * @return true if the bit is a 1, false if it's a 0
  * @throws IndexOutOfBoundsException when [index] is lesser than 0 or greater than 8 * [this.size]
@@ -147,7 +147,7 @@ fun ByteArray.isMinValue() : Boolean{
 /**
  * Checks if [this] matches a condition based on an [wildcard mask][wcMask] and a prefix
  * Note : while the concept of wildcard mask comes from network engineering, it is perfectly applicable for any array of bytes.
- * See https://en.wikipedia.org/wiki/Wildcard_mask
+ * For more information, see https://en.wikipedia.org/wiki/Wildcard_mask
  * @param prefix The reference array against which to test the match
  * @param wcMask will determine which bits to test (will test a given bit of [this] against the one on the same position in [prefix] if at 0, will not test if at 1)
  * @return true if the bits selected by [wcMask] in [this] and [prefix] are the same, false if there is at least a single difference
@@ -163,7 +163,9 @@ fun ByteArray.checkMatch(prefix : ByteArray, wcMask : ByteArray) : Boolean{
                             .xor(wcMask.inv())       //hence the need to invert it each time
     return res.isMinValue()
 }
-
+/**
+ * @return the amount of bits in [this] with a value of 1
+ */
 fun ByteArray.amountOfOnes() : Int{
     var ones = 0
     for(i in 0 until 256)
@@ -172,14 +174,20 @@ fun ByteArray.amountOfOnes() : Int{
     return ones
 }
 
-
+/**
+ * Enables us to directly compare two [ByteArrays][ByteArray] (with > or < or == or !=)
+ * @see [UByte.compareTo]
+ * @param bytes [ByteArray] against which to compare [this]
+ * @return -1 if [this] < [bytes], 1 if [this] > [bytes], 0 if [this] == [bytes]
+ * @throws DifferentArraySizesException if [bytes] and [this] have different sizes
+ */
 operator fun ByteArray.compareTo(bytes: ByteArray): Int {
 
     if(this.size != bytes.size)
         throw DifferentArraySizesException()
 
-    for(i in 0 until this.size){
-        if(this[i].toUByte() < bytes[i].toUByte())
+    for(i in 0 until this.size){                        //goes through the array, starting with the heaviest bytes, then compares the unsigned values of the corresponding bytes.
+        if(this[i].toUByte() < bytes[i].toUByte())          //repeats either until a difference is found, or we hit the end of the arrays (therefor the arrays are equal)
             return -1
         else if(this[i].toUByte() > bytes[i].toUByte())
             return 1
@@ -187,6 +195,10 @@ operator fun ByteArray.compareTo(bytes: ByteArray): Int {
     return 0
 }
 
+/**
+ * Converts a [ByteArray] into a readable hexadecimal [String]
+ * @return [this] with each [Byte] converted into a 2 digit hexadecimal string
+ */
 fun ByteArray.toHexFormat() : String {
     var res = ""
     this.forEach {
@@ -195,17 +207,32 @@ fun ByteArray.toHexFormat() : String {
     return res
 }
 
+/**
+ * Saves a [ByteArray] into a file. Will erase the file if it exists.
+ * @see [File.writeBytes]
+ * @param path path to the file to write [this] into
+ */
 fun ByteArray.toFile(path : String){
     var file = File(path)
     file.writeBytes(this)
 }
 
-
+/**
+ * Saves a [ByteArray] into a file. Will erase the file if it exists.
+ * @see [File.readBytes]
+ * @param path path to the file to read bytes from
+ * @return a [ByteArray] containing the read [Bytes][Byte]
+ */
 fun bytesFromFile(path : String) : ByteArray{
     var file = File(path)
     return file.readBytes()
 }
 
+/**
+ * Prints a user-friendly display of [this]
+ * Each line is 32 bytes long, cut into 4 8-bytes long blocks
+ * @param basic if true, will only print [this] in a single, unformatted hexadecimal string. false by default
+ */
 fun ByteArray.printHex(basic : Boolean = false){
     var count = 0
     this.forEach {
