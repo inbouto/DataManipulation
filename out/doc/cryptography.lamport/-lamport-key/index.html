@@ -1,0 +1,154 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LamportKey - </title>
+<link rel="stylesheet" href="..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">cryptography.lamport</a>&nbsp;/&nbsp;<a href=".">LamportKey</a><br/>
+<br/>
+<h1>LamportKey</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LamportKey</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Any</span></code>
+<p>Lamport signature scheme key. This contains a single key (public or private) stored as two <a href="#">ByteArrays</a>, one containing the '0' key, the other containing the '1' key. See https://en.wikipedia.org/wiki/Lamport_signature for more info.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">LamportKey</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LamportKey$<init>(kotlin.ByteArray, kotlin.ByteArray)/key0">key0</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LamportKey$<init>(kotlin.ByteArray, kotlin.ByteArray)/key1">key1</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span></code>
+<p>Lamport signature scheme key. This contains a single key (public or private) stored as two <a href="#">ByteArrays</a>, one containing the '0' key, the other containing the '1' key. See https://en.wikipedia.org/wiki/Lamport_signature for more info.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="key0.html">key0</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">key0</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>half of the key used to code for 0</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="key1.html">key1</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">key1</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>half of the key used to code for 1</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="get-block.html">getBlock</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getBlock</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LamportKey$getBlock(kotlin.Int, kotlin.Int)/keyID">keyID</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LamportKey$getBlock(kotlin.Int, kotlin.Int)/blockIndex">blockIndex</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Getter for a block of the LamportKey. A block is a set of bytes, usually of the size of the output of the hash function used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="print-hex.html">printHex</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">printHex</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Prints <a href="#">this</a> in a similar manner as <a href="#">ByteArray.printHex</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="set-block.html">setBlock</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setBlock</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LamportKey$setBlock(kotlin.Int, kotlin.Int, kotlin.ByteArray)/keyID">keyID</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LamportKey$setBlock(kotlin.Int, kotlin.Int, kotlin.ByteArray)/blockIndex">blockIndex</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LamportKey$setBlock(kotlin.Int, kotlin.Int, kotlin.ByteArray)/block">block</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Setter for a block of the LamportKey. A block is a set of bytes, usually of the size of the output of the hash function used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="to-byte-array.html">toByteArray</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toByteArray</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Simply concatenates both halves of the key together into a single <a href="#">ByteArray</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="to-file.html">toFile</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toFile</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LamportKey$toFile(kotlin.String)/path">path</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Appends the content of <a href="key1.html">LamportKey.key1</a> to that of <a href="key0.html">LamportKey.key0</a> and writes the bytes to a given file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-b-l-o-c-k_-s-i-z-e.html">BLOCK_SIZE</a></td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">BLOCK_SIZE</span><span class="symbol">: </span><span class="identifier">Int</span></code>
+<p>Size of the Lamport Key block. Should be equal to the output size of the hash function used (in this case, sha256, 32 bytes)</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-k-e-y_-l-e-n-g-t-h.html">KEY_LENGTH</a></td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">KEY_LENGTH</span><span class="symbol">: </span><span class="identifier">Int</span></code>
+<p>Total size of a half-key in <a href="#">Bytes</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="generate-keys.html">generateKeys</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">generateKeys</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><a href="../-l-secret-key/index.html"><span class="identifier">LSecretKey</span></a><span class="symbol">,</span>&nbsp;<a href="../-l-public-key/index.html"><span class="identifier">LPublicKey</span></a><span class="symbol">&gt;</span></code>
+<p>Generates a <a href="../-l-secret-key/index.html">Secret</a>/<a href="../-l-public-key/index.html">Public</a> key pair</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="lamport-from-file.html">lamportFromFile</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">lamportFromFile</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LamportKey.Companion$lamportFromFile(kotlin.String)/path">path</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LamportKey</span></code>
+<p>Loads a LamportKey stored in a file using the reversed scheme of <a href="to-file.html">LamportKey.toFile</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="../-l-public-key/index.html">LPublicKey</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LPublicKey</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">LamportKey</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="../-l-secret-key/index.html">LSecretKey</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LSecretKey</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">LamportKey</span></code>
+<p>Lamport Secret (private) Key. A regular Lamport key capable of <a href="../-l-secret-key/sign.html">signing</a> messages.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

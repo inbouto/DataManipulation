@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BinaryCheck - </title>
+<link rel="stylesheet" href="..\style.css">
+</HEAD>
+<BODY>
+<a href="index.html">kotlin.Byte</a>&nbsp;/&nbsp;<a href=".">BinaryCheck</a><br/>
+<br/>
+<h1>BinaryCheck</h1>
+<a name="$BinaryCheck(kotlin.Byte, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">Byte</span><span class="symbol">.</span><span class="identifier">BinaryCheck</span><span class="symbol">(</span><span class="identifier" id="$BinaryCheck(kotlin.Byte, kotlin.Int)/checkValue">checkValue</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks whether certain bits of a byte are at 1 or not.
+For example, if checkValue is 128, will check for the first bit (10000000). If at 192 (11000000), will check for first and second bits, etc...
+Useful when used through <a href="#">Byte.checkBit</a>.</p>
+<h3>Parameters</h3>
+
+<p><a name="checkValue"></a>
+<code>checkValue</code> - unsigned decimal value of the binary mask that will decide which bits are to be checked for 1
+<p><strong>Return</strong><br/>
+true if all checked bits are 1s, false if at least one bit is a 0. will always return true if <a href="-binary-check.html#$BinaryCheck(kotlin.Byte, kotlin.Int)/checkValue">checkValue</a> is 0</p>
+<p><strong>Trows</strong><br/>
+<a href="../data_manipulation.basics/-invalid-byte-value-exception/index.html">InvalidByteValueException</a> if given <a href="-binary-check.html#$BinaryCheck(kotlin.Byte, kotlin.Int)/checkValue">checkValue</a> is lesser than 0 or greater than 255</p>
+</BODY>
+</HTML>

@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cryptography.lamport - </title>
+<link rel="stylesheet" href="..\style.css">
+</HEAD>
+<BODY>
+<a href=".">cryptography.lamport</a><br/>
+<br/>
+<h2>Package cryptography.lamport</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-l-public-key/index.html">LPublicKey</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LPublicKey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-lamport-key/index.html"><span class="identifier">LamportKey</span></a></code></td>
+</tr>
+<tr>
+<td>
+<a href="-l-secret-key/index.html">LSecretKey</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LSecretKey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-lamport-key/index.html"><span class="identifier">LamportKey</span></a></code>
+<p>Lamport Secret (private) Key. A regular Lamport key capable of <a href="-l-secret-key/sign.html">signing</a> messages.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-lamport-key/index.html">LamportKey</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LamportKey</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Any</span></code>
+<p>Lamport signature scheme key. This contains a single key (public or private) stored as two <a href="#">ByteArrays</a>, one containing the '0' key, the other containing the '1' key. See https://en.wikipedia.org/wiki/Lamport_signature for more info.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Exceptions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-invalid-block-size-exception/index.html">InvalidBlockSizeException</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">InvalidBlockSizeException</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Throwable</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="-invalid-key-i-d-exception/index.html">InvalidKeyIDException</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">InvalidKeyIDException</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Throwable</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-h-a-s-h_-s-i-z-e.html">HASH_SIZE</a></td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">HASH_SIZE</span><span class="symbol">: </span><span class="identifier">Int</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="brute-force.html">bruteForce</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">bruteForce</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport$bruteForce(kotlin.String, kotlin.ByteArray, kotlin.ByteArray)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$bruteForce(kotlin.String, kotlin.ByteArray, kotlin.ByteArray)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$bruteForce(kotlin.String, kotlin.ByteArray, kotlin.ByteArray)/mask">mask</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">String</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="forge.html">forge</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">forge</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport$forge(cryptography.lamport.LPublicKey, ((kotlin.ByteArray)), ((kotlin.String)), kotlin.String, kotlin.String)/pubKey">pubKey</span><span class="symbol">:</span>&nbsp;<a href="-l-public-key/index.html"><span class="identifier">LPublicKey</span></a><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$forge(cryptography.lamport.LPublicKey, ((kotlin.ByteArray)), ((kotlin.String)), kotlin.String, kotlin.String)/signatures">signatures</span><span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">ByteArray</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$forge(cryptography.lamport.LPublicKey, ((kotlin.ByteArray)), ((kotlin.String)), kotlin.String, kotlin.String)/messages">messages</span><span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$forge(cryptography.lamport.LPublicKey, ((kotlin.ByteArray)), ((kotlin.String)), kotlin.String, kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$forge(cryptography.lamport.LPublicKey, ((kotlin.ByteArray)), ((kotlin.String)), kotlin.String, kotlin.String)/outputFiles">outputFiles</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="gen-partial-key.html">genPartialKey</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">genPartialKey</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport$genPartialKey(((kotlin.ByteArray)), ((kotlin.ByteArray)))/hashes">hashes</span><span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">ByteArray</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport$genPartialKey(((kotlin.ByteArray)), ((kotlin.ByteArray)))/signatures">signatures</span><span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">ByteArray</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="-l-secret-key/index.html"><span class="identifier">LSecretKey</span></a></code></td>
+</tr>
+<tr>
+<td>
+<a href="get-hashes.html">getHashes</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getHashes</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport$getHashes(((kotlin.String)))/messages">messages</span><span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">ByteArray</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="get-mask.html">getMask</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getMask</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport$getMask(((kotlin.ByteArray)))/hashes">hashes</span><span class="symbol">:</span>&nbsp;<a href="../index.html"><span class="identifier">&lt;ERROR CLASS&gt;</span></a><span class="symbol">&lt;</span><span class="identifier">ByteArray</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

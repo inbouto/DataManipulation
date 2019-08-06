@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LamportKey.getBlock - </title>
+<link rel="stylesheet" href="..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">cryptography.lamport</a>&nbsp;/&nbsp;<a href="index.html">LamportKey</a>&nbsp;/&nbsp;<a href=".">getBlock</a><br/>
+<br/>
+<h1>getBlock</h1>
+<a name="cryptography.lamport.LamportKey$getBlock(kotlin.Int, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">getBlock</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LamportKey$getBlock(kotlin.Int, kotlin.Int)/keyID">keyID</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LamportKey$getBlock(kotlin.Int, kotlin.Int)/blockIndex">blockIndex</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Getter for a block of the <a href="index.html">LamportKey</a>. A block is a set of bytes, usually of the size of the output of the hash function used.</p>
+<h3>Parameters</h3>
+
+<p><a name="keyID"></a>
+<code>keyID</code> - which key to fetch the block from. Should be either 0 or 1.
+<p><a name="blockIndex"></a>
+<code>blockIndex</code> - index of the block to fetch.
+<h3>Exceptions</h3>
+
+<p><a name="InvalidKeyIDException"></a>
+<code>InvalidKeyIDException</code> - if <a href="get-block.html#cryptography.lamport.LamportKey$getBlock(kotlin.Int, kotlin.Int)/keyID">keyID</a> is neither 0 nor 1
+<p><strong>See Also</strong><br/>
+<p><a href="-b-l-o-c-k_-s-i-z-e.html">LamportKey.BLOCK_SIZE</a></p>
+<p><a href="set-block.html">LamportKey.setBlock</a></p>
+</p>
+<p><strong>Return</strong><br/>
+a <a href="#">ByteArray</a> of <a href="-b-l-o-c-k_-s-i-z-e.html">LamportKey.BLOCK_SIZE</a> containing the block.</p>
+</BODY>
+</HTML>

@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>kotlin.ByteArray - </title>
+<link rel="stylesheet" href="..\style.css">
+</HEAD>
+<BODY>
+<a href=".">kotlin.ByteArray</a><br/>
+<br/>
+<h3>Extensions for kotlin.ByteArray</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="amount-of-ones.html">amountOfOnes</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">amountOfOnes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Int</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="and.html">and</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">and</span><span class="symbol">(</span><span class="identifier" id="$and(kotlin.ByteArray, kotlin.ByteArray)/comp">comp</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Does a bitwise AND comparison between two <a href="#">ByteArrays</a>.
+Both <a href="#">ByteArray</a>s have to be the same size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="check-bit.html">checkBit</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">checkBit</span><span class="symbol">(</span><span class="identifier" id="$checkBit(kotlin.ByteArray, kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks whether a given bit of a <a href="#">ByteArray</a> is a 1 or a 0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="check-match.html">checkMatch</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">checkMatch</span><span class="symbol">(</span><span class="identifier" id="$checkMatch(kotlin.ByteArray, kotlin.ByteArray, kotlin.ByteArray)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">, </span><span class="identifier" id="$checkMatch(kotlin.ByteArray, kotlin.ByteArray, kotlin.ByteArray)/wcMask">wcMask</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks if <a href="#">this</a> matches a condition based on an <a href="check-match.html#$checkMatch(kotlin.ByteArray, kotlin.ByteArray, kotlin.ByteArray)/wcMask">wildcard mask</a> and a prefix.
+Note : while the concept of wildcard mask comes from network engineering, it is perfectly applicable for any array of bytes.
+For more information, see https://en.wikipedia.org/wiki/Wildcard_mask</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="compare-to.html">compareTo</a></td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">compareTo</span><span class="symbol">(</span><span class="identifier" id="$compareTo(kotlin.ByteArray, kotlin.ByteArray)/bytes">bytes</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Int</span></code>
+<p>Enables us to directly compare two <a href="#">ByteArrays</a> (with &gt; or &lt; or == or !=).</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-block.html">getBlock</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">getBlock</span><span class="symbol">(</span><span class="identifier" id="$getBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$getBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="hash-block-by-block.html">hashBlockByBlock</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">hashBlockByBlock</span><span class="symbol">(</span><span class="identifier" id="$hashBlockByBlock(kotlin.ByteArray, kotlin.Int)/blk_size">blk_size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="inv.html">inv</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">inv</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Does a bitwise inversion (NOT operation) of <a href="#">this</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="is-min-value.html">isMinValue</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">isMinValue</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks whether <a href="#">this</a> contains only bits at 0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="or.html">or</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">or</span><span class="symbol">(</span><span class="identifier" id="$or(kotlin.ByteArray, kotlin.ByteArray)/comp">comp</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Does a bitwise OR comparison between two <a href="#">ByteArrays</a>.
+Both <a href="#">ByteArray</a>s have to be the same size.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="print-hex.html">printHex</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">printHex</span><span class="symbol">(</span><span class="identifier" id="$printHex(kotlin.ByteArray, kotlin.Boolean)/basic">basic</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Prints a user-friendly display of <a href="#">this</a>.
+Each line is 32 bytes long, cut into 4 8-bytes long blocks.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="set-block.html">setBlock</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">setBlock</span><span class="symbol">(</span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.ByteArray)/position">position</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.ByteArray)/size">size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.ByteArray)/block_from">block_from</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="sha.html">sha</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">sha</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Generates a sha-256 hash of a <a href="#">ByteArray</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="to-file.html">toFile</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">toFile</span><span class="symbol">(</span><span class="identifier" id="$toFile(kotlin.ByteArray, kotlin.String)/path">path</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Saves a <a href="#">ByteArray</a> into a file. Will erase the file if it exists.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="to-hex-format.html">toHexFormat</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">toHexFormat</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">String</span></code>
+<p>Converts a <a href="#">ByteArray</a> into a readable hexadecimal <a href="#">String</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="xor.html">xor</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">xor</span><span class="symbol">(</span><span class="identifier" id="$xor(kotlin.ByteArray, kotlin.ByteArray)/comp">comp</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Does a bitwise XOR (exclusive OR) comparison between two <a href="#">ByteArrays</a>.
+Both <a href="#">ByteArray</a>s have to be the same size.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
