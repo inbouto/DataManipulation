@@ -5,11 +5,18 @@ import cryptography.lamport.toByteArray
 import java.util.ArrayList
 
 
-
+/**
+ * @suppress
+ */
 const val DIR = "C:\\Users\\Learneo\\IdeaProjects\\Crypto\\resources"
-
+/**
+ * @suppress
+ */
 const val KEY_AMOUNT = 8
-
+/**
+ * @suppress
+ *
+ */
 fun main() {
 
     val pubKeys = ArrayList<LPublicKey>(0)

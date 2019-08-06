@@ -16,7 +16,7 @@ import kotlin.math.pow
 
 
 /**
- * Generates a sha-256 hash of a [ByteArray]
+ * Generates a sha-256 hash of a [ByteArray].
  * @see [MessageDigest]
  * @return the sha-256 hash of the [ByteArray]
  */
@@ -25,9 +25,9 @@ fun ByteArray.sha() : ByteArray{
 }
 
 /**
- * Checks whether certain bits of a byte are at 1 or not
+ * Checks whether certain bits of a byte are at 1 or not.
  * For example, if checkValue is 128, will check for the first bit (10000000). If at 192 (11000000), will check for first and second bits, etc...
- * Useful when used through [Byte.checkBit]
+ * Useful when used through [Byte.checkBit].
  * @param checkValue unsigned decimal value of the binary mask that will decide which bits are to be checked for 1
  * @return true if all checked bits are 1s, false if at least one bit is a 0. will always return true if [checkValue] is 0
  * @trows [InvalidByteValueException] if given [checkValue] is lesser than 0 or greater than 255
@@ -39,8 +39,8 @@ fun Byte.BinaryCheck(checkValue : Int) : Boolean{
 }
 
 /**
- * Checks whether a certain bit at a given position in the byte is a 1 or a 0
- * Useful for sequential checks of bits in a byte
+ * Checks whether a certain bit at a given position in the byte is a 1 or a 0.
+ * Useful for sequential checks of bits in a byte.
  * @see [Byte.BinaryCheck]
  * @param position the position of the bit to check between 1 and 8 (heaviest bit is bit 1, lightest bit is bit 8)
  * @return true if bit is a 1, false if bit is a 0
@@ -53,8 +53,8 @@ fun Byte.checkBit(position : Int) : Boolean{
 }
 
 /**
- * Does a bitwise XOR (exclusive OR) comparison between two [ByteArray]s
- * Both [ByteArray]s have to be the same size
+ * Does a bitwise XOR (exclusive OR) comparison between two [ByteArrays][ByteArray].
+ * Both [ByteArray]s have to be the same size.
  * @see [Byte.xor]
  * @param comp [ByteArray] to compare with [this]
  * @return the result of the bitwise XOR operation between [this] and [comp]
@@ -71,8 +71,8 @@ fun ByteArray.xor(comp : ByteArray) : ByteArray {
 }
 
 /**
- * Does a bitwise AND comparison between two [ByteArray]s.
- * Both [ByteArray]s have to be the same size
+ * Does a bitwise AND comparison between two [ByteArrays][ByteArray].
+ * Both [ByteArray]s have to be the same size.
  * @see [Byte.and]
  * @param comp [ByteArray] to compare with [this]
  * @return the result of the bitwise AND operation between [this] and [comp]
@@ -90,8 +90,8 @@ fun ByteArray.and(comp : ByteArray) : ByteArray {
 
 
 /**
- * Does a bitwise OR comparison between two [ByteArrays][ByteArray]
- * Both [ByteArray]s have to be the same size
+ * Does a bitwise OR comparison between two [ByteArrays][ByteArray].
+ * Both [ByteArray]s have to be the same size.
  * @see [Byte.or]
  * @param comp [ByteArray] to compare with [this]
  * @return the result of the bitwise OR operation between [this] and [comp]
@@ -107,7 +107,7 @@ fun ByteArray.or(comp : ByteArray) : ByteArray {
 }
 
 /**
- * Does a bitwise inversion (NOT operation) of [this]
+ * Does a bitwise inversion (NOT operation) of [this].
  * @see [Byte.inv]
  * @return inverted bit values for [this]
  */
@@ -120,7 +120,7 @@ fun ByteArray.inv() : ByteArray {
 }
 
 /**
- * Checks whether a given bit of a [ByteArray] is a 1 or a 0
+ * Checks whether a given bit of a [ByteArray] is a 1 or a 0.
  * @see [Byte.checkBit]
  * @param index the position of the bit to check (max value is 8 times [this.size])
  * @return true if the bit is a 1, false if it's a 0
@@ -133,7 +133,7 @@ fun ByteArray.checkBit(index : Int) : Boolean{
 }
 
 /**
- * Checks whether a [this] contains only bits at 0
+ * Checks whether [this] contains only bits at 0.
  * @return true if [this] only contains bits at 0, false if [this] contains at least one bit at 1
  */
 fun ByteArray.isMinValue() : Boolean{
@@ -145,7 +145,7 @@ fun ByteArray.isMinValue() : Boolean{
 }
 
 /**
- * Checks if [this] matches a condition based on an [wildcard mask][wcMask] and a prefix
+ * Checks if [this] matches a condition based on an [wildcard mask][wcMask] and a prefix.
  * Note : while the concept of wildcard mask comes from network engineering, it is perfectly applicable for any array of bytes.
  * For more information, see https://en.wikipedia.org/wiki/Wildcard_mask
  * @param prefix The reference array against which to test the match
@@ -175,7 +175,7 @@ fun ByteArray.amountOfOnes() : Int{
 }
 
 /**
- * Enables us to directly compare two [ByteArrays][ByteArray] (with > or < or == or !=)
+ * Enables us to directly compare two [ByteArrays][ByteArray] (with > or < or == or !=).
  * @see [UByte.compareTo]
  * @param bytes [ByteArray] against which to compare [this]
  * @return -1 if [this] < [bytes], 1 if [this] > [bytes], 0 if [this] == [bytes]
@@ -196,7 +196,7 @@ operator fun ByteArray.compareTo(bytes: ByteArray): Int {
 }
 
 /**
- * Converts a [ByteArray] into a readable hexadecimal [String]
+ * Converts a [ByteArray] into a readable hexadecimal [String].
  * @return [this] with each [Byte] converted into a 2 digit hexadecimal string
  */
 fun ByteArray.toHexFormat() : String {
@@ -229,8 +229,8 @@ fun bytesFromFile(path : String) : ByteArray{
 }
 
 /**
- * Prints a user-friendly display of [this]
- * Each line is 32 bytes long, cut into 4 8-bytes long blocks
+ * Prints a user-friendly display of [this].
+ * Each line is 32 bytes long, cut into 4 8-bytes long blocks.
  * @param basic if true, will only print [this] in a single, unformatted hexadecimal string. false by default
  */
 fun ByteArray.printHex(basic : Boolean = false){
