@@ -1,7 +1,4 @@
-import cryptography.lamport.LPublicKey
-import cryptography.lamport.LSecretKey
-import cryptography.lamport.generateKeys
-import cryptography.lamport.toByteArray
+import cryptography.lamport.*
 import java.util.ArrayList
 
 
@@ -22,7 +19,7 @@ fun main() {
     val pubKeys = ArrayList<LPublicKey>(0)
     val secKey = ArrayList<LSecretKey>(0)
     for(i in 0 until KEY_AMOUNT){
-        val keys = generateKeys()
+        val keys = LamportKey.generateKeys()
         pubKeys.add(keys.second)
         secKey.add(keys.first)
 
