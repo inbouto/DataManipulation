@@ -1,4 +1,15 @@
-import java.io.File
+package cryptography.lamport
+
+import amountOfOnes
+import and
+import checkBit
+import checkMatch
+import getBlock
+import inv
+import or
+import setBlock
+import sha
+import xor
 import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.pow
@@ -67,9 +78,15 @@ fun genPartialKey(hashes: ArrayList<ByteArray>, signatures: ArrayList<ByteArray>
     for(i in 0 until hashes.size)
         for(j in 0 until 256)
             if(hashes[i].checkBit(j))
-                key1.setBlock(j, LamportKey.BLOCK_SIZE, signatures[i].getBlock(j, LamportKey.BLOCK_SIZE))
+                key1.setBlock(j,
+                    LamportKey.BLOCK_SIZE, signatures[i].getBlock(j,
+                        LamportKey.BLOCK_SIZE
+                    ))
             else
-                key0.setBlock(j, LamportKey.BLOCK_SIZE, signatures[i].getBlock(j, LamportKey.BLOCK_SIZE))
+                key0.setBlock(j,
+                    LamportKey.BLOCK_SIZE, signatures[i].getBlock(j,
+                        LamportKey.BLOCK_SIZE
+                    ))
     return LSecretKey(key0, key1)
 }
 

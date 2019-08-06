@@ -1,12 +1,50 @@
 import java.lang.Exception
-import java.math.BigInteger
 import kotlin.math.log2
-import kotlin.math.pow
 
+/**
+ * @author Inbouto
+ */
 
-class MerkleTree{
+class MerkleTree : List<MerkleTree.Container>{
+    override fun get(index: Int): Container {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-    private val size: Int
+    override fun indexOf(element: Container): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun lastIndexOf(element: Container): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun listIterator(): ListIterator<Container> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun listIterator(index: Int): ListIterator<Container> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun subList(fromIndex: Int, toIndex: Int): List<Container> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun contains(element: Container): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun containsAll(elements: Collection<Container>): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun isEmpty(): Boolean = false
+
+    override fun iterator(): Iterator<Container> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override val size: Int
     private val root: Root
     private val depth: Int
 
@@ -16,6 +54,20 @@ class MerkleTree{
 
         size = pubKeys.size
         depth = log2(size.toFloat()).toInt()
+
+
+        var complete = false
+        while(!complete){
+            complete = true
+            for(i in 0 until pubKeys.size-1){
+                if(pubKeys[i] > pubKeys[i+1]){
+                    val tmp = pubKeys[i]
+                    pubKeys[i] = pubKeys[i+1]
+                    pubKeys[i+1] = tmp
+                    complete = false
+                }
+            }
+        }
         root = Root(pubKeys)
     }
 
@@ -42,17 +94,13 @@ class MerkleTree{
     class Node(contents : List<ByteArray>, override val parent: Parent) : Child, Parent(contents){
         override fun print(): ArrayList<String> = recursivePrint()
     }
-    class Leaf(private val content: ByteArray, override val parent: Parent) : Child {
+    class Leaf(content: ByteArray, override val parent: Parent) : Child {
+        val container : Container = Container(content)
         override val hash: ByteArray = content.sha()
-        override fun print(): ArrayList<String> = arrayListOf("HASH :\t${hash.toHexFormat()}")
+        override fun print(): ArrayList<String> = arrayListOf("HASH :\t${hash.toHexFormat()}", container.print())
     }
 
-    class Root(contents : List<ByteArray>) : Parent(contents){
-        override fun recursivePrint() : ArrayList<String> {
-            val res = super.recursivePrint()
-            return res
-        }
-    }
+    class Root(contents : List<ByteArray>) : Parent(contents)
 
 
 
@@ -107,7 +155,12 @@ class MerkleTree{
     open interface HashContainer{
         val hash : ByteArray
     }
+    open class Container(val content : ByteArray) {
+        fun print(): String = content.toHexFormat()
+    }
 
 }
+
+
 
 

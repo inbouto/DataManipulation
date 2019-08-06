@@ -1,8 +1,18 @@
-
+package cryptography.lamport
+import LAMPORT_BLK_SIZE
+import checkBit
+import getBlock
+import hashBlockByBlock
+import printHex
+import setBlock
+import sha
+import toFile
 import java.io.File
 import kotlin.random.Random
 
-
+/**
+ * @author Inbouto
+ */
 
 
 
@@ -41,7 +51,7 @@ fun quick_read_message(path : String){
 open class LamportKey(val key0 : ByteArray, val key1 : ByteArray){
     companion object {
         const val BLOCK_SIZE = 32
-        const val KEY_LENGTH = 256*BLOCK_SIZE
+        const val KEY_LENGTH = 256* BLOCK_SIZE
     }
 }
 
@@ -117,9 +127,15 @@ fun LSecretKey.sign(message : String) : ByteArray{
     val msgHash = message.toByteArray().sha()
     for(i in 0 until (LamportKey.BLOCK_SIZE)*8) {
         if(msgHash.checkBit(i))
-            sig.setBlock(i, LamportKey.BLOCK_SIZE, key1.getBlock(i, LamportKey.BLOCK_SIZE))
+            sig.setBlock(i,
+                LamportKey.BLOCK_SIZE, key1.getBlock(i,
+                    LamportKey.BLOCK_SIZE
+                ))
         else
-            sig.setBlock(i, LamportKey.BLOCK_SIZE, key0.getBlock(i, LamportKey.BLOCK_SIZE))
+            sig.setBlock(i,
+                LamportKey.BLOCK_SIZE, key0.getBlock(i,
+                    LamportKey.BLOCK_SIZE
+                ))
 
     }
     return sig
@@ -135,22 +151,22 @@ fun LamportKey.toFile(path : String){
     file.appendBytes(key1)
 }
 
-fun lamportFromFile(path : String) : LamportKey{
+fun lamportFromFile(path : String) : LamportKey {
     var file = File(path)
     val full = file.readBytes()
-    return LamportKey(full.copyOfRange(0, (256*32)), full.copyOfRange(256*32, full.size))
+    return LamportKey(full.copyOfRange(0, (256 * 32)), full.copyOfRange(256 * 32, full.size))
 }
 
-fun lSecretFromFile(path : String) : LSecretKey{
+fun lSecretFromFile(path : String) : LSecretKey {
     var file = File(path)
     val full = file.readBytes()
-    return LSecretKey(full.copyOfRange(0, (256*32)), full.copyOfRange(256*32, full.size))
+    return LSecretKey(full.copyOfRange(0, (256 * 32)), full.copyOfRange(256 * 32, full.size))
 }
 
-fun lPublicFromFile(path : String) : LPublicKey{
+fun lPublicFromFile(path : String) : LPublicKey {
     var file = File(path)
     val full = file.readBytes()
-    return LPublicKey(full.copyOfRange(0, (256*32)), full.copyOfRange(256*32, full.size))
+    return LPublicKey(full.copyOfRange(0, (256 * 32)), full.copyOfRange(256 * 32, full.size))
 }
 
 fun LamportKey.printHex(){
@@ -164,18 +180,18 @@ fun LamportKey.printHex(){
 //First block is block 0
 fun LamportKey.getBlock(keyID: Int, blockNum: Int) : ByteArray{
     return if(keyID == 1)
-        key1.copyOfRange(blockNum*LAMPORT_BLK_SIZE, (blockNum+1)*LAMPORT_BLK_SIZE -1)
+        key1.copyOfRange(blockNum* LAMPORT_BLK_SIZE, (blockNum+1)* LAMPORT_BLK_SIZE -1)
     else
-        key0.copyOfRange(blockNum*LAMPORT_BLK_SIZE, (blockNum+1)*LAMPORT_BLK_SIZE -1)
+        key0.copyOfRange(blockNum* LAMPORT_BLK_SIZE, (blockNum+1)* LAMPORT_BLK_SIZE -1)
 }
 
 fun LamportKey.setBlock(keyID : Boolean, blockNum : Int, block : ByteArray){
     if (block.size != 32)
         return
     if(keyID)
-        block.copyInto(key1, blockNum*LAMPORT_BLK_SIZE, blockNum*LAMPORT_BLK_SIZE, (blockNum+1)*LAMPORT_BLK_SIZE-1)
+        block.copyInto(key1, blockNum* LAMPORT_BLK_SIZE, blockNum* LAMPORT_BLK_SIZE, (blockNum+1)* LAMPORT_BLK_SIZE -1)
     else
-        block.copyInto(key0, blockNum*LAMPORT_BLK_SIZE, blockNum*LAMPORT_BLK_SIZE, (blockNum+1)*LAMPORT_BLK_SIZE-1)
+        block.copyInto(key0, blockNum* LAMPORT_BLK_SIZE, blockNum* LAMPORT_BLK_SIZE, (blockNum+1)* LAMPORT_BLK_SIZE -1)
 }
 
 fun LamportKey.toByteArray() : ByteArray{

@@ -1,10 +1,17 @@
-import java.io.File
+import cryptography.lamport.LPublicKey
+import cryptography.lamport.LSecretKey
+import cryptography.lamport.generateKeys
+import cryptography.lamport.toByteArray
+import java.util.ArrayList
+
+
 
 const val DIR = "C:\\Users\\Learneo\\IdeaProjects\\Crypto\\resources"
 
-const val KEY_AMOUNT = 64
+const val KEY_AMOUNT = 8
 
 fun main() {
+
     val pubKeys = ArrayList<LPublicKey>(0)
     val secKey = ArrayList<LSecretKey>(0)
     for(i in 0 until KEY_AMOUNT){
@@ -14,14 +21,17 @@ fun main() {
 
 
     }
-    println(MerkleTree({
+    val tree = MerkleTree({
         val result = ArrayList<ByteArray>(0)
         pubKeys.forEach {
             result.add(it.toByteArray())
         }
         result
     }()
-    ))
+    )
+
+
+    println(tree)
 
 
 
