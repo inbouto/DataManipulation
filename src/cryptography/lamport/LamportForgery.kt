@@ -10,13 +10,26 @@ import or
 import setBlock
 import sha
 import xor
+import java.io.File
 import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.pow
 
-const val HASH_SIZE = 32
+/**
+ * @author Inbouto
+ * contains methods to generate a partial private key from successive Lamport signatures that use the same public key. Should not work with against one-time-use Lamport keys.
+ */
 
-fun forge(pubKey : LPublicKey, signatures : ArrayList<ByteArray>, messages : ArrayList<String>, message : String, outputFiles : String){
+
+
+/**
+ * @suppress
+ */
+const val HASH_SIZE = 32
+/**
+ * @suppress
+ */
+fun forge(pubKey : LPublicKey, signatures : ArrayList<ByteArray>, messages : ArrayList<ByteArray>, messageToForge : String, outputFiles : String){
 
     if(signatures.size != messages.size)
         throw Exception()
@@ -36,28 +49,32 @@ fun forge(pubKey : LPublicKey, signatures : ArrayList<ByteArray>, messages : Arr
     val partialPriv = genPartialKey(hashes, signatures)
 
 
-    //Finally, for a given message, we keep generating hashes (with salt) until we find a hash that fits our prefix+mask
+    //Finally, for a given messageToForge, we keep generating hashes (with salt) until we find a hash that fits our prefix+mask
 
-    val finalMessage = bruteForce(message, prefix, mask)
+    val forgedMessage = bruteForce(messageToForge, prefix, mask)
 
     println("Forgery complete !")
-    println("complete message : \"$finalMessage\"")
+    println("complete messageToForge : \"$forgedMessage\"")
 
-    //With that message and our partial private key, we can now generate our forged signature :
+    //With that messageToForge and our partial private key, we can now generate our forged signature :
 
-    partialPriv.generateMessageFile(finalMessage, outputFiles)
+    val forgedSignature = partialPriv.sign(forgedMessage.toByteArray())
+    File("$outputFiles.sig").writeBytes(forgedSignature)
 
 
-    //final check ; verifying the message with signature and public key
+    //final check ; verifying the messageToForge with signature and public key
 
 
     println("Checking forgery...")
-    if(pubKey.checkMessage(outputFiles))
+    if(pubKey.verify(forgedMessage.toByteArray(), forgedSignature))
         println("Forgery successful !")
     else
         println("Forgery failed !")
 }
 
+/**
+ * @suppress
+ */
 fun bruteForce(message: String, prefix: ByteArray, mask: ByteArray): String {
     var salt = BigInteger.valueOf(0)
     val attempts = 2.0.pow((256 - mask.amountOfOnes()).toDouble()).toInt()
@@ -70,6 +87,9 @@ fun bruteForce(message: String, prefix: ByteArray, mask: ByteArray): String {
     return "$message $salt"
 }
 
+/**
+ * @suppress
+ */
 fun genPartialKey(hashes: ArrayList<ByteArray>, signatures: ArrayList<ByteArray>): LSecretKey {
 
     val key1 = ByteArray(LamportKey.BLOCK_SIZE * 256)
@@ -78,18 +98,15 @@ fun genPartialKey(hashes: ArrayList<ByteArray>, signatures: ArrayList<ByteArray>
     for(i in 0 until hashes.size)
         for(j in 0 until 256)
             if(hashes[i].checkBit(j))
-                key1.setBlock(j,
-                    LamportKey.BLOCK_SIZE, signatures[i].getBlock(j,
-                        LamportKey.BLOCK_SIZE
-                    ))
+                key1.setBlock(j, signatures[i].getBlock(j, LamportKey.BLOCK_SIZE))
             else
-                key0.setBlock(j,
-                    LamportKey.BLOCK_SIZE, signatures[i].getBlock(j,
-                        LamportKey.BLOCK_SIZE
-                    ))
+                key0.setBlock(j, signatures[i].getBlock(j, LamportKey.BLOCK_SIZE))
     return LSecretKey(key0, key1)
 }
 
+/**
+ * @suppress
+ */
 fun getMask(hashes: ArrayList<ByteArray>): ByteArray{
     val mask = ByteArray(HASH_SIZE)
     for(i in 1 until hashes.size)
@@ -100,11 +117,14 @@ fun getMask(hashes: ArrayList<ByteArray>): ByteArray{
     return mask
 }
 
-fun getHashes(messages: ArrayList<String>): ArrayList<ByteArray> {
+/**
+ * @suppress
+ */
+fun getHashes(messages: ArrayList<ByteArray>): ArrayList<ByteArray> {
     val hashes = ArrayList<ByteArray>()
 
     messages.forEach{
-        hashes.add(it.toByteArray().sha())
+        hashes.add(it.sha())
     }
     return hashes
 }

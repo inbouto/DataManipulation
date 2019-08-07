@@ -1,5 +1,4 @@
 package cryptography.lamport
-import LAMPORT_BLK_SIZE
 import checkBit
 import getBlock
 import hashBlockByBlock
@@ -103,9 +102,9 @@ open class LamportKey(val key0 : ByteArray, val key1 : ByteArray){
             throw InvalidKeyIDException()
 
         return if(keyID == 1)
-            key1.copyOfRange(blockIndex* LAMPORT_BLK_SIZE, (blockIndex+1)* LAMPORT_BLK_SIZE -1)
+            key1.copyOfRange(blockIndex* BLOCK_SIZE, (blockIndex+1)* BLOCK_SIZE -1)
         else
-            key0.copyOfRange(blockIndex* LAMPORT_BLK_SIZE, (blockIndex+1)* LAMPORT_BLK_SIZE -1)
+            key0.copyOfRange(blockIndex* BLOCK_SIZE, (blockIndex+1)* BLOCK_SIZE -1)
     }
 
 
@@ -125,9 +124,9 @@ open class LamportKey(val key0 : ByteArray, val key1 : ByteArray){
         if (block.size != 32)
             throw InvalidBlockSizeException()
         if(keyID == 1)
-            block.copyInto(key1, blockIndex* LAMPORT_BLK_SIZE, blockIndex* LAMPORT_BLK_SIZE, (blockIndex+1)* LAMPORT_BLK_SIZE -1)
+            block.copyInto(key1, blockIndex* BLOCK_SIZE, blockIndex* BLOCK_SIZE, (blockIndex+1)* BLOCK_SIZE -1)
         else
-            block.copyInto(key0, blockIndex* LAMPORT_BLK_SIZE, blockIndex* LAMPORT_BLK_SIZE, (blockIndex+1)* LAMPORT_BLK_SIZE -1)
+            block.copyInto(key0, blockIndex* BLOCK_SIZE, blockIndex* BLOCK_SIZE, (blockIndex+1)* BLOCK_SIZE -1)
     }
 
     /**
@@ -175,20 +174,14 @@ class LSecretKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
      * @param message message to sign
      * @return a signature for the given message. We recommend appending that signature with the message when sending it to the recipient using [ByteArray.toHexFormat]
      */
-    fun sign(message : String) : ByteArray{
+    fun sign(message : ByteArray) : ByteArray{
         var sig = ByteArray(KEY_LENGTH)
-        val msgHash = message.toByteArray().sha()
+        val msgHash = message.sha()
         for(i in 0 until (BLOCK_SIZE)*8) {
             if(msgHash.checkBit(i))
-                sig.setBlock(i,
-                    BLOCK_SIZE, key1.getBlock(i,
-                        BLOCK_SIZE
-                    ))
+                sig.setBlock(i, key1.getBlock(i, BLOCK_SIZE))
             else
-                sig.setBlock(i,
-                    BLOCK_SIZE, key0.getBlock(i,
-                        BLOCK_SIZE
-                    ))
+                sig.setBlock(i, key0.getBlock(i, BLOCK_SIZE))
         }
         return sig
     }
@@ -229,7 +222,7 @@ class LPublicKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
      * @param sig the received signature
      * @return true if the signature is valid, false if it is not.
      */
-    fun verify(message : String, sig : ByteArray) : Boolean{
+    fun verify(message : ByteArray, sig : ByteArray) : Boolean{
 
         //Step one : generating hashed blocks from the signature :
 
@@ -239,8 +232,7 @@ class LPublicKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
 
         //Step two : generating a hash of the message :
         val hashedMsg =
-            message.toByteArray()
-                .sha()
+            message.sha()
         //Step three : comparing the hashed signature to key0 and key1 of the public key
         for(i in 0 until (HASH_SIZE)*8){        //For each bit of the sha256 hash of the message...
             if (hashedMsg.checkBit(i)) {  //If we find '1'...

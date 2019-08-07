@@ -55,13 +55,17 @@ For more information, see https://en.wikipedia.org/wiki/Wildcard_mask</p>
 <td>
 <a href="get-block.html">getBlock</a></td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">getBlock</span><span class="symbol">(</span><span class="identifier" id="$getBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$getBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">getBlock</span><span class="symbol">(</span><span class="identifier" id="$getBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int)/blockIndex">blockIndex</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$getBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int)/blockSize">blockSize</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Retrieves a "block" of data of any blockSize for a <a href="#">ByteArray</a></p>
+</td>
 </tr>
 <tr>
 <td>
 <a href="hash-block-by-block.html">hashBlockByBlock</a></td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">hashBlockByBlock</span><span class="symbol">(</span><span class="identifier" id="$hashBlockByBlock(kotlin.ByteArray, kotlin.Int)/blk_size">blk_size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">hashBlockByBlock</span><span class="symbol">(</span><span class="identifier" id="$hashBlockByBlock(kotlin.ByteArray, kotlin.Int)/blk_size">blk_size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ByteArray</span></code>
+<p>Hashes <a href="#">this</a> block by block and puts each hash one after another in a <a href="#">ByteArray</a></p>
+</td>
 </tr>
 <tr>
 <td>
@@ -101,7 +105,9 @@ Each line is 32 bytes long, cut into 4 8-bytes long blocks.</p>
 <td>
 <a href="set-block.html">setBlock</a></td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">setBlock</span><span class="symbol">(</span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.ByteArray)/position">position</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.ByteArray)/size">size</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.ByteArray)/block_from">block_from</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">ByteArray</span><span class="symbol">.</span><span class="identifier">setBlock</span><span class="symbol">(</span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.ByteArray)/position">position</span><span class="symbol">:</span>&nbsp;<span class="identifier">Int</span><span class="symbol">, </span><span class="identifier" id="$setBlock(kotlin.ByteArray, kotlin.Int, kotlin.ByteArray)/block_from">block_from</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Sets a "block" of data of any blockSize in a <a href="#">ByteArray</a></p>
+</td>
 </tr>
 <tr>
 <td>

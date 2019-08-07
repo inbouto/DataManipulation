@@ -8,8 +8,8 @@
 <a href="../index.html">cryptography.lamport</a>&nbsp;/&nbsp;<a href="index.html">LPublicKey</a>&nbsp;/&nbsp;<a href=".">verify</a><br/>
 <br/>
 <h1>verify</h1>
-<a name="cryptography.lamport.LPublicKey$verify(kotlin.String, kotlin.ByteArray)"></a>
-<code><span class="keyword">fun </span><span class="identifier">verify</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LPublicKey$verify(kotlin.String, kotlin.ByteArray)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LPublicKey$verify(kotlin.String, kotlin.ByteArray)/sig">sig</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<a name="cryptography.lamport.LPublicKey$verify(kotlin.ByteArray, kotlin.ByteArray)"></a>
+<code><span class="keyword">fun </span><span class="identifier">verify</span><span class="symbol">(</span><span class="identifier" id="cryptography.lamport.LPublicKey$verify(kotlin.ByteArray, kotlin.ByteArray)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">, </span><span class="identifier" id="cryptography.lamport.LPublicKey$verify(kotlin.ByteArray, kotlin.ByteArray)/sig">sig</span><span class="symbol">:</span>&nbsp;<span class="identifier">ByteArray</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
 <p>Verifies the validity of a message-signature-public key set. The public key to use should be that which the sender published prior to sending you a message with signature. And invalid signature means the authentication has failed. In other terms, we aren't sure who generated that signature or if the message was altered.</p>
 <h3>Parameters</h3>
 
