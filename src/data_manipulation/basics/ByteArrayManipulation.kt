@@ -129,7 +129,7 @@ fun ByteArray.inv() : ByteArray {
 fun ByteArray.checkBit(index : Int) : Boolean{
     if(index/8 > this.size || index < 0)
         throw IndexOutOfBoundsException()
-    return this[index/8].checkBit(index%8)
+    return this[index/8].checkBit((index%8)+1)
 }
 
 /**
@@ -249,4 +249,77 @@ fun ByteArray.printHex(basic : Boolean = false){
         }
     }
 
+}
+
+/**
+ * Generates an indexed hash. Simply appends the [index] and generates a hash from it.
+ *
+ * @param index value to append to [this]. Must be between 0 and 255 included
+ * @return the sha256 hash of the concatenation of [this] and [index]
+ */
+fun ByteArray.indexedHash(index : Int) : ByteArray{
+
+    return (this + index.toUInt().toByteArray()).sha()
+}
+
+/**
+ * Turns an [Int] into a 4-long [ByteArray]
+ * @see [ByteArray.toInt]
+ * @return the [ByteArray] containing all 4 bytes previously contained in [this]. First [Byte] is heaviest, last one is lightest
+ */
+fun UInt.toByteArray() : ByteArray{
+    val res = ByteArray(4)
+    for(i in 0 until 4)
+        res[3-i] = (this/(256.0.pow(i)).toUInt()).toUInt().toByte()
+    return res
+}
+
+/**
+ * Turns the last 4 [Bytes][Byte] of a [ByteArray] into an [Int]
+ * @see [Int.toByteArray]
+ * @return the [Int] value equivalent to the last 4 [Bytes][Byte] of the [ByteArray]
+ */
+fun ByteArray.toUInt() : UInt{
+
+
+    var res = 0u
+    for(i in 0 until 4) {
+        if (i == 3)
+            res += this[3 - i].toUInt() * 256.0.pow(i).toUInt()       //Only the heaviest byte should be signed. Every other byte has to be turned into a UByte.
+        else
+            res += this[3 - i].toUByte().toUInt() * 256.0.pow(i).toUInt()
+    }
+    return res
+}
+
+/**
+ * Returns the [ByteArray] in dotted decimal form, similar to an IP address
+ *
+ * @return the decimal representation of the [ByteArray]
+ */
+fun ByteArray.toDecFormat() : String{
+
+    var res = ""
+    this.forEach {
+        res += ".${it.toUByte()}"
+    }
+    return res
+}
+
+/**
+ * Returns the [ByteArray] in dotted binary form. This is horribly unoptimized. Please use only for testing purposes.
+ *
+ * @return the binary representation of the [ByteArray]
+ */
+fun ByteArray.toBinaryFormat() : String{
+    var res = ""
+    for(i in 0 until this.size*8){
+        if(this.checkBit(i))
+            res += '1'
+        else
+            res += '0'
+        if(i%8==7)
+            res+='.'
+    }
+    return res
 }
