@@ -26,7 +26,7 @@ open class LamportKey(val key0 : ByteArray, val key1 : ByteArray){
 
     /**
      * @property BLOCK_SIZE Size of the Lamport Key block. Should be equal to the output size of the hash function used (in this case, sha256, 32 bytes)
-     * @property KEY_LENGTH Total size of a half-key in [Bytes][Byte].
+     * @property KEY_LENGTH Total size of a half-key in [Bytes][Byte]. Should be a the hash-size-in-bits blocks long
      */
     companion object {
         const val BLOCK_SIZE = 32
