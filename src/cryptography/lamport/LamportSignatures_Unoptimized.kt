@@ -186,6 +186,11 @@ class LSecretKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
         return sig
     }
 }
+
+
+class LSecretKeyReduced()
+
+
 /**
  * Lamport Public Key. A regular Lamport key capable of [verifying][verify] messages.
  * @see [LamportKey]

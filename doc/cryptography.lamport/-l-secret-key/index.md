@@ -12,7 +12,7 @@ Lamport Secret (private) Key. A regular Lamport key capable of [signing](sign.md
 
 ### Constructors
 
-| [&lt;init&gt;](-init-.md) | `LSecretKey(key0: ByteArray, key1: ByteArray)`<br>generates a secret [Lamport key](../-lamport-key/index.md) |
+| [&lt;init&gt;](-init-.md) | `LSecretKey(key0: ByteArray, key1: ByteArray)`<br>generates a LSecretRoot [Lamport key](../-lamport-key/index.md) |
 
 ### Inherited Properties
 
@@ -21,7 +21,7 @@ Lamport Secret (private) Key. A regular Lamport key capable of [signing](sign.md
 
 ### Functions
 
-| [sign](sign.md) | `fun sign(message: ByteArray): ByteArray`<br>Signs a [message](sign.md#cryptography.lamport.LSecretKey$sign(kotlin.ByteArray)/message) using the secret key |
+| [sign](sign.md) | `fun sign(message: ByteArray): ByteArray`<br>Signs a [message](sign.md#cryptography.lamport.LSecretKey$sign(kotlin.ByteArray)/message) using the LSecretRoot key |
 
 ### Inherited Functions
 
@@ -33,5 +33,5 @@ Lamport Secret (private) Key. A regular Lamport key capable of [signing](sign.md
 
 ### Companion Object Functions
 
-| [lSecretFromFile](l-secret-from-file.md) | `fun lSecretFromFile(path: String): LSecretKey`<br>Loads a LSecretKey stored in a file using the reversed scheme of [LamportKey.toFile](../-lamport-key/to-file.md) |
+| [lSecretFromFile](l-LSecretRoot-from-file.md) | `fun lSecretFromFile(path: String): LSecretKey`<br>Loads a LSecretKey stored in a file using the reversed scheme of [LamportKey.toFile](../-lamport-key/to-file.md) |
 

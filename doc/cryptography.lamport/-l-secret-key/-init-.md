@@ -4,7 +4,7 @@
 
 `LSecretKey(key0: ByteArray, key1: ByteArray)`
 
-generates a secret [Lamport key](../-lamport-key/index.md)
+generates a LSecretRoot [Lamport key](../-lamport-key/index.md)
 
 ### Parameters
 
@@ -13,5 +13,5 @@ generates a secret [Lamport key](../-lamport-key/index.md)
 `key1` - same as [LamportKey.key1](../-lamport-key/key1.md)
 
 **Constructor**
-generates a secret [Lamport key](../-lamport-key/index.md)
+generates a LSecretRoot [Lamport key](../-lamport-key/index.md)
 

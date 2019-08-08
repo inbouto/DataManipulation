@@ -30,11 +30,11 @@ Lamport signature scheme key. This contains a single key (public or private) sto
 
 ### Companion Object Functions
 
-| [generateKeys](generate-keys.md) | `fun generateKeys(): `[`<ERROR CLASS>`](../../index.md)`<`[`LSecretKey`](../-l-secret-key/index.md)`, `[`LPublicKey`](../-l-public-key/index.md)`>`<br>Generates a [Secret](../-l-secret-key/index.md)/[Public](../-l-public-key/index.md) key pair |
+| [generateKeys](generate-keys.md) | `fun generateKeys(): `[`<ERROR CLASS>`](../../index.md)`<`[`LSecretKey`](../-l-LSecretRoot-key/index.md)`, `[`LPublicKey`](../-l-public-key/index.md)`>`<br>Generates a [Secret](../-l-LSecretRoot-key/index.md)/[Public](../-l-public-key/index.md) key pair |
 | [lamportFromFile](lamport-from-file.md) | `fun lamportFromFile(path: String): LamportKey`<br>Loads a LamportKey stored in a file using the reversed scheme of [LamportKey.toFile](to-file.md) |
 
 ### Inheritors
 
 | [LPublicKey](../-l-public-key/index.md) | `class LPublicKey : LamportKey`<br>Lamport Public Key. A regular Lamport key capable of [verifying](../-l-public-key/verify.md) messages. |
-| [LSecretKey](../-l-secret-key/index.md) | `class LSecretKey : LamportKey`<br>Lamport Secret (private) Key. A regular Lamport key capable of [signing](../-l-secret-key/sign.md) messages. |
+| [LSecretKey](../-l-LSecretRoot-key/index.md) | `class LSecretKey : LamportKey`<br>Lamport Secret (private) Key. A regular Lamport key capable of [signing](../-l-LSecretRoot-key/sign.md) messages. |
 

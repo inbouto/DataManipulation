@@ -1,4 +1,8 @@
-import data_manipulation.structures.InvalidDataSetException
+package data_manipulation.structures
+
+import compareTo
+import sha
+import toHexFormat
 import java.lang.Exception
 import kotlin.math.log2
 
@@ -22,7 +26,7 @@ import kotlin.math.log2
  *
  * @param contents the total data to store.
  */
-class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
+class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
 
     override val size: Int
     private val root: Root
@@ -37,7 +41,7 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
         while(!complete){
             complete = true
             for(i in 0 until contents.size-1){
-                if(contents[i] > contents[i+1]){
+                if(contents[i].content > contents[i+1].content){
                     val tmp = contents[i]
                     contents[i] = contents[i+1]
                     contents[i+1] = tmp
@@ -74,7 +78,7 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
      *
      * @param contents to be split between all final [Leaves][Leaf]
      */
-    private class Node(contents : List<ByteArray>, override val parent: Parent) : Child, Parent(contents){
+    private class Node(contents : List<Container>, override val parent: Parent) : Child, Parent(contents){
         /**
          * Used to display the [Node] and its children
          * @see [Parent.recursivePrint]
@@ -94,9 +98,8 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
      *
      * @param content Data to be stored in the [container]
      */
-    private class Leaf(content: ByteArray, override val parent: Parent) : Child {
-        val container : Container = Container(content)
-        override val hash: ByteArray = content.sha()
+    private class Leaf(val container: Container, override val parent: Parent) : Child {
+        override val hash: ByteArray = container.content.sha()
         /**
          * prints the leaf in a single line containing the [hash] of the contents stored in [container]
          * @see [ByteArray.toHexFormat]
@@ -114,7 +117,7 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
      *
      * @param contents a list of all the contents to store
      */
-    private class Root(contents : List<ByteArray>) : Parent(contents)
+    private class Root(contents : List<Container>) : Parent(contents)
 
 
     /**
@@ -129,7 +132,7 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
      *
      * @param contents data to store among [Children][Child]
      */
-    private open abstract class Parent(contents : List<ByteArray>) : HashContainer{
+    private open abstract class Parent(contents : List<Container>) : HashContainer{
         override val hash : ByteArray
         private val child0 : Child
         private val child1 : Child
@@ -207,7 +210,7 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
      *
      * @property content data to store
      */
-    private open class Container(val content : ByteArray) {
+    open class Container(val content : ByteArray) {
         fun print(): String = content.toHexFormat()
     }
 
@@ -219,49 +222,49 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
     /**
      * @see [List.get]
      */
-    override fun get(index: Int): ByteArray {
+    override fun get(index: Int): Container {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.indexOf]
      */
-    override fun indexOf(element: ByteArray): Int {
+    override fun indexOf(element: Container): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.lastIndexOf]
      */
-    override fun lastIndexOf(element: ByteArray): Int {
+    override fun lastIndexOf(element: Container): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.listIterator]
      */
-    override fun listIterator(): ListIterator<ByteArray> {
+    override fun listIterator(): ListIterator<Container> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.listIterator]
      */
-    override fun listIterator(index: Int): ListIterator<ByteArray> {
+    override fun listIterator(index: Int): ListIterator<Container> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.subList]
      */
-    override fun subList(fromIndex: Int, toIndex: Int): List<ByteArray> {
+    override fun subList(fromIndex: Int, toIndex: Int): List<Container> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.contains]
      */
-    override fun contains(element: ByteArray): Boolean {
+    override fun contains(element: Container): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
      * @see [List.containsAll]
      */
-    override fun containsAll(elements: Collection<ByteArray>): Boolean {
+    override fun containsAll(elements: Collection<Container>): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     /**
@@ -271,14 +274,13 @@ class MerkleTree(contents: ArrayList<ByteArray>) : List<ByteArray>{
     /**
      * @see [List.get]
      */
-    override fun iterator(): Iterator<ByteArray> {
+    override fun iterator(): Iterator<Container> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
 
 }
-
 
 
 
