@@ -4,7 +4,7 @@
 
 `fun sign(message: ByteArray): ByteArray`
 
-Signs a [message](sign.md#cryptography.lamport.LSecretKey$sign(kotlin.ByteArray)/message) using the LSecretRoot key
+Signs a [message](sign.md#cryptography.lamport.LSecretKey$sign(kotlin.ByteArray)/message) using the secret key
 
 ### Parameters
 
