@@ -37,18 +37,24 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
             throw InvalidDataSetException()
         size = contents.size
         depth = log2(size.toFloat()).toInt()
+
         var complete = false
-        while(!complete){
-            complete = true
-            for(i in 0 until contents.size-1){
-                if(contents[i].content > contents[i+1].content){
-                    val tmp = contents[i]
-                    contents[i] = contents[i+1]
-                    contents[i+1] = tmp
-                    complete = false
-                }
-            }
-        }
+
+
+        //This entire section was made to sort contents. However this proved impractical (the improved Lamport scheme already generates keys in a specific order that needs to be kept. No re-sorting)
+
+//        while(!complete){
+//            complete = true
+//            for(i in 0 until contents.size-1){
+//                if(contents[i].content > contents[i+1].content){
+//                    val tmp = contents[i]
+//                    contents[i] = contents[i+1]
+//                    contents[i+1] = tmp
+//                    complete = false
+//                }
+//            }
+//        }
+
         root = Root(contents)
     }
 

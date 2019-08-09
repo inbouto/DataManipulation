@@ -6,7 +6,7 @@
 | [kotlin.ByteArray](../kotlin.-byte-array/index.md) (extensions in package ) |  |
 | [data_manipulation.basics.DifferentArraySizesException](../data_manipulation.basics/-different-array-sizes-exception/index.md) |  |
 | [cryptography.lamport.ImprovedLamportScheme](../cryptography.lamport/-improved-lamport-scheme/index.md) | We will use an indexed hash twice : once to index a public key, once to index a block of a public key.
-That's how a single 32 bytes private key can generate a virtually illimited amount of public keys. |
+That's how a single 32 bytes private key can generate a virtually unlimited amount of public keys. |
 | [cryptography.shared.IncorrectBlockSizeException](../cryptography.shared/-incorrect-block-size-exception/index.md) |  |
 | [data_manipulation.basics.InvalidBitPositionException](../data_manipulation.basics/-invalid-bit-position-exception/index.md) |  |
 | [cryptography.lamport.InvalidBlockSizeException](../cryptography.lamport/-invalid-block-size-exception/index.md) |  |
