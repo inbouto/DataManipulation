@@ -39,14 +39,14 @@ import kotlin.random.Random
  *
  */
 class ImprovedLamportScheme(amount: Int){
-    val pubKeys : MerkleTree
-    val secret : LSecretRoot
+    private val pubKeys : MerkleTree
+    private val secret : LSecretRoot
     init{
 
         secret = genLSecretRoot()
 
 
-        pubKeys = MerkleTree({              //Not sure why, but we have to convert the StackableLPublic into Containers.
+        pubKeys = MerkleTree({              //Not sure why, but we have to cast the StackableLPublic into Containers.
             var res = ArrayList<MerkleTree.Container>(0)
             genPublicKeys(amount, secret).forEach {
                 res.add(it)
@@ -98,11 +98,12 @@ class ImprovedLamportScheme(amount: Int){
      * @param message the message to sign
      * @return a 24KB signature, containing the signature itself, the public key used and a hash chain.
      */
-    fun sign(message : ByteArray) : ByteArray{
+    fun sign(message : ByteArray) : ImprovedLSignature{
         for(i in 0 until pubKeys.size){
-            if(!(pubKeys[i] as LPublicContainer).used)
-                return secret.signUsingKey(message, i)
-
+            if(!(pubKeys.get(i) as LPublicContainer).used){
+                (pubKeys.get(i) as LPublicContainer).used = true
+                return ImprovedLSignature(secret.signUsingKey(message, i), LPublicKey(pubKeys.get(i).content), pubKeys.getHashChain(i))
+            }
         }
         throw NoMoreUsableKeysExceptioon()
     }
@@ -168,6 +169,10 @@ class ImprovedLamportScheme(amount: Int){
     {
         var used = false
     }
+
+
+    class ImprovedLSignature(val signature : ByteArray, val pubKey : LPublicKey, val hashChain : ArrayList<ByteArray>)
+
 
     override fun toString(): String {
         return pubKeys.toString()

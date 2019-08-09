@@ -1,7 +1,8 @@
 package data_manipulation.structures
 
-import compareTo
+import checkBit
 import sha
+import toByteArray
 import toHexFormat
 import java.lang.Exception
 import kotlin.math.log2
@@ -26,9 +27,9 @@ import kotlin.math.log2
  *
  * @param contents the total data to store.
  */
-class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
+class MerkleTree(contents: ArrayList<Container>){
 
-    override val size: Int
+    val size: Int
     private val root: Root
     private val depth: Int
 
@@ -38,7 +39,7 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
         size = contents.size
         depth = log2(size.toFloat()).toInt()
 
-        var complete = false
+
 
 
         //This entire section was made to sort contents. However this proved impractical (the improved Lamport scheme already generates keys in a specific order that needs to be kept. No re-sorting)
@@ -59,6 +60,13 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
     }
 
 
+    /**
+     * Retrieves the chain of hashes that will allow someone to generate the public key hash from a single [Container]
+     *
+     * @param index index of the [Container]
+     * @return the chain of hashes ; first hash is that of the neighbour container, last hash is the penultimate hash before the public key hash
+     */
+    fun getHashChain(index : Int) : ArrayList<ByteArray> = root.fetchHashedChain(index)
 
 
 
@@ -71,6 +79,18 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
         }
         return res
     }
+
+    /**
+     * Standard "get" method to retrieve a [Container] using its index.
+     * @see [Child.get]
+     * @see [Leaf.get]
+     * @see [Parent.fetch]
+     * @see [Node.fetch]
+     *
+     * @param index the index of the [Container] to retrieve
+     * @return the [Container] at the given [index]
+     */
+    fun get(index: Int): Container = root.fetch(index)
 
 
     /**
@@ -85,6 +105,20 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
      * @param contents to be split between all final [Leaves][Leaf]
      */
     private class Node(contents : List<Container>, override val parent: Parent) : Child, Parent(contents){
+        override fun getHashedChain(index: Int): ArrayList<ByteArray> = fetchHashedChain(index)
+
+        /**
+         * [get] is inherited from [Child] ; [fetch] is inherited from [Parent]
+         * When a [Parent] asks its [Child] for a [Container], it sees it only as a [Child] and can only access the [Child.get] method.
+         * A [Node], being both a [Parent] and a [Child], must manually do this translation : "My parent is asking for a container. I dont have the container, but one of my children do".
+         * a [Node] is asked as a [Child], but must behave as a [Parent] and ask its own [Children][Child] for the [Container]
+         *
+         * @param index index of the
+         * @return
+         */
+        override fun get(index: Int): Container = fetch(index)
+
+
         /**
          * Used to display the [Node] and its children
          * @see [Parent.recursivePrint]
@@ -105,6 +139,17 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
      * @param content Data to be stored in the [container]
      */
     private class Leaf(val container: Container, override val parent: Parent) : Child {
+        override fun getHashedChain(index: Int): ArrayList<ByteArray> = arrayListOf(hash)
+
+        /**
+         * Get the container. Inherited and overridden from [Child.get]
+         *
+         * @param index index of the container (should not matter at this point, because we know we're in a leaf)
+         * @return the container
+         */
+        override fun get(index: Int): Container = container
+
+
         override val hash: ByteArray = container.content.sha()
         /**
          * prints the leaf in a single line containing the [hash] of the contents stored in [container]
@@ -142,7 +187,7 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
         override val hash : ByteArray
         private val child0 : Child
         private val child1 : Child
-
+        val depth : Int
 
         init{
             if((log2(contents.size.toFloat()) - log2(contents.size.toFloat()).toInt() >0))  //If the pubKeys array doesnt contain a power of 2 amount of keys...
@@ -151,9 +196,12 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
             if(contents.size == 2){
                 child0 = Leaf(contents[0], this)
                 child1 = Leaf(contents[1], this)
+                depth = 1
             }
             else{
-                child0 = Node(contents.subList(0, (contents.size/2).toInt()).toList(), this)
+                val tmp = Node(contents.subList(0, (contents.size/2).toInt()).toList(), this)   //We use a temporary val to also retrieve the depth. Once it's converted to a child, its depth is no longer accessible, so we can't do child0.depth
+                depth = tmp.depth+1
+                child0 = tmp
                 child1 = Node(contents.subList((contents.size/2).toInt(), contents.size).toList(), this)
             }
             hash = (child0.hash + child1.hash).sha()
@@ -187,7 +235,41 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
             return res
         }
 
+        /**
+         * Fetches a container
+         *
+         * @param index index of the container
+         * @return the container at the given index
+         */
+        open fun fetch(index : Int) : Container{
+            if(index.toUInt().toByteArray().checkBit(32 - this.depth))
+                return child1.get(index)
+            else
+                return child0.get(index)
+        }
 
+        /**
+         * Fetches the hash chain for a given container index, then appends its own hash to the result.
+         *
+         * [fetch] is used for [Parent] methods, not to confuse with [get] methods which are used for [Child] methods.
+         * @see [Child.get]
+         *
+         * @param index index of the container
+         * @return the hash chain leading to the container. First hash if that of the container, last hash is that of the final parent
+         */
+        fun fetchHashedChain(index: Int): ArrayList<ByteArray>{
+            val res = ArrayList<ByteArray>(0)
+            if(index.toUInt().toByteArray().checkBit(32 - this.depth)) {
+                var tmp = child1.getHashedChain(index)
+                tmp.add(hash)
+                return tmp
+            }
+            else {
+                var tmp = child0.getHashedChain(index)
+                tmp.add(hash)
+                return tmp
+            }
+        }
 
     }
 
@@ -197,7 +279,12 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
      * @see [Leaf]
      */
     private open interface Child : HashContainer{
+
+        fun get(index : Int) : Container
+
         fun print() : ArrayList<String>
+        fun getHashedChain(index: Int): ArrayList<ByteArray>
+
         val parent : Parent
     }
 
@@ -221,68 +308,6 @@ class MerkleTree(contents: ArrayList<Container>) : List<MerkleTree.Container>{
     }
 
 
-
-
-
-
-    /**
-     * @see [List.get]
-     */
-    override fun get(index: Int): Container {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.indexOf]
-     */
-    override fun indexOf(element: Container): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.lastIndexOf]
-     */
-    override fun lastIndexOf(element: Container): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.listIterator]
-     */
-    override fun listIterator(): ListIterator<Container> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.listIterator]
-     */
-    override fun listIterator(index: Int): ListIterator<Container> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.subList]
-     */
-    override fun subList(fromIndex: Int, toIndex: Int): List<Container> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.contains]
-     */
-    override fun contains(element: Container): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.containsAll]
-     */
-    override fun containsAll(elements: Collection<Container>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    /**
-     * @see [List.get]
-     */
-    override fun isEmpty(): Boolean = false
-    /**
-     * @see [List.get]
-     */
-    override fun iterator(): Iterator<Container> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
 
 

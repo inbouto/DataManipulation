@@ -12,7 +12,7 @@ Lamport Public Key. A regular Lamport key capable of [verifying](verify.md) mess
 
 ### Constructors
 
-| [&lt;init&gt;](-init-.md) | `LPublicKey(key0: ByteArray, key1: ByteArray)`<br>generates a secret [Lamport key](../-lamport-key/index.md) |
+| [&lt;init&gt;](-init-.md) | `LPublicKey(concatenatedKey: ByteArray)`<br>This constructor is useful to generate a public key from a single concatenated key`LPublicKey(key0: ByteArray, key1: ByteArray)`<br>generates a secret [Lamport key](../-lamport-key/index.md) |
 
 ### Inherited Properties
 

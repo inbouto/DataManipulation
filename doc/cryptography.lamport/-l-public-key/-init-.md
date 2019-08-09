@@ -2,6 +2,14 @@
 
 # &lt;init&gt;
 
+`LPublicKey(concatenatedKey: ByteArray)`
+
+This constructor is useful to generate a public key from a single concatenated key
+
+**See Also**
+
+[ImprovedLamportScheme.sign](../-improved-lamport-scheme/sign.md)
+
 `LPublicKey(key0: ByteArray, key1: ByteArray)`
 
 generates a secret [Lamport key](../-lamport-key/index.md)

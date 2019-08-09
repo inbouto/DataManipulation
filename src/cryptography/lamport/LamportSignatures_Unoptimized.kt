@@ -201,6 +201,11 @@ class LSecretKeyReduced()
  * @param key1 same as [LamportKey.key1]
  */
 class LPublicKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
+    /**
+     * This constructor is useful to generate a public key from a single concatenated key
+     * @see [ImprovedLamportScheme.sign]
+     */
+    constructor(concatenatedKey: ByteArray) : this(concatenatedKey.copyOfRange(0, concatenatedKey.size/2), concatenatedKey.copyOfRange(concatenatedKey.size/2, concatenatedKey.size))
 
 
     companion object{
@@ -243,9 +248,8 @@ class LPublicKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
             if (hashedMsg.checkBit(i)) {  //If we find '1'...
                 if (!(hashedSig.getBlock(i, BLOCK_SIZE) contentEquals
                             (this.key1.getBlock(i, BLOCK_SIZE)))  ) {    //If the hash of the signature doesnt match the same block of the public key...
-                    sig.getBlock(i, BLOCK_SIZE).printHex()
-                    hashedSig.getBlock(i, BLOCK_SIZE).printHex()
-                    this.key1.getBlock(i, BLOCK_SIZE).printHex()
+
+
                     return false    //Failed authentication
                 }
             }
