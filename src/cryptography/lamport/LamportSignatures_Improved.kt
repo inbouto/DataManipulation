@@ -4,10 +4,7 @@ package cryptography.lamport
 import data_manipulation.structures.MerkleTree
 import hashBlockByBlock
 import indexedHash
-import printHex
 import setBlock
-import toByteArray
-import java.io.File
 import kotlin.random.Random
 
 /**
@@ -87,7 +84,7 @@ class ImprovedLamportScheme(amount: Int){
     private fun genPublicKeys(amount : Int, secret : LSecretRoot) : ArrayList<LPublicContainer>{
         var res = ArrayList<LPublicContainer>(0)
         for(i in 0 until amount){
-            res.add(LPublicContainer(genIndexedPubKey(i)))
+            res.add(LPublicContainer(secret.genIndexedPubKey(i)))
         }
         return res
     }
@@ -110,7 +107,24 @@ class ImprovedLamportScheme(amount: Int){
         throw NoMoreUsableKeysExceptioon()
     }
 
-    private fun genIndexedPubKey(i: Int): LPublicKey = LPublicKey(secret.getIndexedLSecret(i).key0.hashBlockByBlock(BLOCK_SIZE), secret.getIndexedLSecret(i).key1.hashBlockByBlock(BLOCK_SIZE))
+
+    /**
+     * gets a pubKey from the pubKey Merkle tree. Not to be confused with [LSecretRoot.genIndexedPubKey] which generates a [LPublicKey] from the [LSecretRoot]
+     *
+     * @param index index of the public key to fetch
+     * @return the [LPublicKey] stored in [pubKeys]
+     */
+    private fun getIndexedPubKey(index : Int): LPublicKey = LPublicKey(pubKeys.get(index).content)
+
+
+    fun usableKeyAmount() : Int{
+        var res = 0
+        for(i in 0 until pubKeys.size)
+            if(!(pubKeys.get(i) as LPublicContainer).used)
+                res++
+        return res
+    }
+
 
 
     /**
@@ -140,10 +154,6 @@ class ImprovedLamportScheme(amount: Int){
          * @return a [LSecretKey] capable of [signing][LSecretKey.sign]
          */
         fun getIndexedLSecret(index : Int) : LSecretKey{
-
-
-
-
             var key0 = ByteArray(KEY_LENGTH)
             var key1 = ByteArray(KEY_LENGTH)
 
@@ -154,6 +164,16 @@ class ImprovedLamportScheme(amount: Int){
 
             return LSecretKey(key0, key1)
         }
+
+        /**
+         * generates a public key from the secret root and a key index. Not to be confused with [getIndexedPubKey] which fetches a [LPublicKey] from the already built [MerkleTree]
+         * @see [getIndexedLSecret]
+         *
+         * @param index index of the key
+         * @return the public key
+         */
+        fun genIndexedPubKey(index: Int): LPublicKey = LPublicKey(getIndexedLSecret(index).key0.hashBlockByBlock(BLOCK_SIZE), getIndexedLSecret(index).key1.hashBlockByBlock(BLOCK_SIZE))
+
 
     }
 
@@ -172,7 +192,13 @@ class ImprovedLamportScheme(amount: Int){
         }
     }
 
-
+    /**
+     * Signature class for the improved Lamport scheme.
+     *
+     * @property signature the partial private key
+     * @property pubKey the public key used to verify the signature
+     * @property hashChain the hash chain necessary to build up to the pubKey hash
+     */
     class ImprovedLSignature(val signature : ByteArray, val pubKey : LPublicKey, val hashChain : ArrayList<ByteArray>)
 
 
