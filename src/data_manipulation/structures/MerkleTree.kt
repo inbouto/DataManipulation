@@ -304,7 +304,7 @@ class MerkleTree(contents: ArrayList<Container>){
      * @property content data to store
      */
     open class Container(val content : ByteArray) {
-        fun print(): String = content.toHexFormat()
+        open fun print(): String = content.toHexFormat()
     }
 
 

@@ -4,8 +4,10 @@ package cryptography.lamport
 import data_manipulation.structures.MerkleTree
 import hashBlockByBlock
 import indexedHash
+import printHex
 import setBlock
 import toByteArray
+import java.io.File
 import kotlin.random.Random
 
 /**
@@ -85,7 +87,7 @@ class ImprovedLamportScheme(amount: Int){
     private fun genPublicKeys(amount : Int, secret : LSecretRoot) : ArrayList<LPublicContainer>{
         var res = ArrayList<LPublicContainer>(0)
         for(i in 0 until amount){
-            res.add(LPublicContainer(secret.getIndexedLSecret(i)))
+            res.add(LPublicContainer(genIndexedPubKey(i)))
         }
         return res
     }
@@ -108,6 +110,8 @@ class ImprovedLamportScheme(amount: Int){
         throw NoMoreUsableKeysExceptioon()
     }
 
+    private fun genIndexedPubKey(i: Int): LPublicKey = LPublicKey(secret.getIndexedLSecret(i).key0.hashBlockByBlock(BLOCK_SIZE), secret.getIndexedLSecret(i).key1.hashBlockByBlock(BLOCK_SIZE))
+
 
     /**
      * Global secret root
@@ -116,13 +120,7 @@ class ImprovedLamportScheme(amount: Int){
     class LSecretRoot {
         val key : ByteArray = Random.Default.nextBytes(ByteArray(BLOCK_SIZE))
 
-        /**
-         * generates an indexed key. simply concatenates the index to the key.
-         *
-         * @param index the index to which to index the key
-         * @return the global secret root key + index
-         */
-        fun getIndexedKey(index: Int) : ByteArray = key + index.toUInt().toByteArray()
+
 
         /**
          * Signs a message using a specific (indexed) key.
@@ -142,12 +140,16 @@ class ImprovedLamportScheme(amount: Int){
          * @return a [LSecretKey] capable of [signing][LSecretKey.sign]
          */
         fun getIndexedLSecret(index : Int) : LSecretKey{
+
+
+
+
             var key0 = ByteArray(KEY_LENGTH)
             var key1 = ByteArray(KEY_LENGTH)
 
             for(i in 0 until KEY_LENGTH/ BLOCK_SIZE){
                 key0.setBlock(i, this.key.indexedHash(index).indexedHash(i))
-                key1.setBlock(i, this.key.indexedHash(index + KEY_LENGTH/ BLOCK_SIZE).indexedHash(i))
+                key1.setBlock(i, this.key.indexedHash(index).indexedHash(i + KEY_LENGTH/ BLOCK_SIZE))
             }
 
             return LSecretKey(key0, key1)
@@ -162,12 +164,12 @@ class ImprovedLamportScheme(amount: Int){
      *
      * @param secret the secret from which to generate a public key
      */
-    class LPublicContainer(secret : LSecretKey) : MerkleTree.Container(
-        LPublicKey(secret.key0.hashBlockByBlock(BLOCK_SIZE), secret.key0.hashBlockByBlock(BLOCK_SIZE))
-            .toByteArray()
-    )
+    class LPublicContainer(public : LPublicKey) : MerkleTree.Container(public.toByteArray())
     {
         var used = false
+        override fun print() : String{
+            return "USED : $used\t\tKEY : ${super.print()}"
+        }
     }
 
 

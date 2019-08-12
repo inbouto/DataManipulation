@@ -5,6 +5,7 @@ import hashBlockByBlock
 import printHex
 import setBlock
 import sha
+import toHexFormat
 import java.io.File
 import kotlin.random.Random
 
@@ -175,8 +176,13 @@ class LSecretKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
      * @return a signature for the given message. We recommend appending that signature with the message when sending it to the recipient using [ByteArray.toHexFormat]
      */
     fun sign(message : ByteArray) : ByteArray{
+
+
+
+
         var sig = ByteArray(KEY_LENGTH)
         val msgHash = message.sha()
+
         for(i in 0 until (BLOCK_SIZE)*8) {
             if(msgHash.checkBit(i))
                 sig.setBlock(i, key1.getBlock(i, BLOCK_SIZE))
@@ -234,6 +240,13 @@ class LPublicKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
      */
     fun verify(message : ByteArray, sig : ByteArray) : Boolean{
 
+
+
+
+
+
+
+
         //Step one : generating hashed blocks from the signature :
 
         val hashedSig = sig.hashBlockByBlock(BLOCK_SIZE)
@@ -243,6 +256,12 @@ class LPublicKey(key0 : ByteArray, key1 : ByteArray) : LamportKey(key0, key1){
         //Step two : generating a hash of the message :
         val hashedMsg =
             message.sha()
+
+
+
+
+
+
         //Step three : comparing the hashed signature to key0 and key1 of the public key
         for(i in 0 until (HASH_SIZE)*8){        //For each bit of the sha256 hash of the message...
             if (hashedMsg.checkBit(i)) {  //If we find '1'...
