@@ -253,6 +253,7 @@ fun ByteArray.printHex(basic : Boolean = false){
 
 /**
  * Generates an indexed hash. Simply appends the [index] and generates a hash from it.
+ * Warning : this method will make attempts at brute forcing a hash a lot less quantum resilient
  *
  * @param index value to append to [this]. Must be between 0 and 255 included
  * @return the sha256 hash of the concatenation of [this] and [index]
