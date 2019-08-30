@@ -177,23 +177,33 @@ fun ByteArray.amountOfOnes() : Int{
 /**
  * Enables us to directly compare two [ByteArrays][ByteArray] (with > or < or == or !=).
  * @see [UByte.compareTo]
- * @param bytes [ByteArray] against which to compare [this]
- * @return -1 if [this] < [bytes], 1 if [this] > [bytes], 0 if [this] == [bytes]
- * @throws DifferentArraySizesException if [bytes] and [this] have different sizes
+ * @param chal [ByteArray] against which to compare [this]
+ * @return -1 if [this] < [chal], 1 if [this] > [chal], 0 if [this] == [chal]
  */
-operator fun ByteArray.compareTo(bytes: ByteArray): Int {
+operator fun ByteArray.compareTo(chal: ByteArray): Int {
 
-    if(this.size != bytes.size)
-        throw DifferentArraySizesException()
+    var testThis = this
 
-    for(i in 0 until this.size){                        //goes through the array, starting with the heaviest bytes, then compares the unsigned values of the corresponding bytes.
-        if(this[i].toUByte() < bytes[i].toUByte())          //repeats either until a difference is found, or we hit the end of the arrays (therefor the arrays are equal)
+
+    if(this.size != chal.size) {
+        if (this.size > chal.size) {
+            chal.prependBytes(this.size - chal.size)
+        }
+        if (this.size < chal.size) {
+            testThis.prependBytes(this.size - chal.size)
+        }
+    }
+
+    for(i in 0 until testThis.size){                        //goes through the array, starting with the heaviest chal, then compares the unsigned values of the corresponding chal.
+        if(testThis[i].toUByte() < chal[i].toUByte())          //repeats either until a difference is found, or we hit the end of the arrays (therefor the arrays are equal)
             return -1
-        else if(this[i].toUByte() > bytes[i].toUByte())
+        else if(testThis[i].toUByte() > chal[i].toUByte())
             return 1
     }
     return 0
 }
+
+
 
 /**
  * Converts a [ByteArray] into a readable hexadecimal [String].
@@ -253,7 +263,6 @@ fun ByteArray.printHex(basic : Boolean = false){
 
 /**
  * Generates an indexed hash. Simply appends the [index] and generates a hash from it.
- * Warning : this method will make attempts at brute forcing a hash a lot less quantum resilient
  *
  * @param index value to append to [this]. Must be between 0 and 255 included
  * @return the sha256 hash of the concatenation of [this] and [index]
@@ -323,4 +332,21 @@ fun ByteArray.toBinaryFormat() : String{
             res+='.'
     }
     return res
+}
+
+private fun ByteArray.prependBytes(amount : Int, value : Byte = 0.toByte()) : ByteArray = ByteArray(amount) {value} + this
+
+
+
+
+fun Byte.setBit(pos : Int, value : Boolean) : Byte{
+    if(this.checkBit(pos+1))
+        return this
+    return this.flipBit(pos)
+}
+
+fun Byte.flipBit(pos : Int) : Byte{
+    if(this.checkBit(pos+1))
+        return (this.toUByte() - (2.0.pow(7-pos)).toInt().toUByte()).toByte()
+    return (this.toUByte() + (2.0.pow(7-pos)).toInt().toUByte()).toByte()
 }
